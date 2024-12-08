@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 public class Categoria
 {
     [Key]
-    public Guid CategoriaId { get; set; }}
+    public Guid CategoriaId { get; set; }
     
     [Required]
     [MaxLength(150)]
