@@ -24,8 +24,18 @@ app.MapGet("/api/tareas", ([FromServices] TareasContext dbContext) =>
     (
         dbContext.Tareas
             .Include(t => t.Categoria)
-            .Where(t => t.Prioridad == Prioridad.Baja)
+            //.Where(t => t.Prioridad == Prioridad.Baja)
     );
+});
+
+app.MapPost("/api/tareas", async ([FromServices] TareasContext dbContext, [FromBody] Tarea tarea) =>
+{
+    tarea.TareaId = Guid.NewGuid();
+    tarea.FechaCreacion = DateTime.Now;
+    await dbContext.AddAsync(tarea);
+    //await dbContext.Tareas.AddAsync(tarea);
+    await dbContext.SaveChangesAsync();
+    return Results.Ok();
 });
 
 app.Run();
